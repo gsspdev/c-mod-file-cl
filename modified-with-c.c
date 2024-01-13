@@ -2,14 +2,19 @@
 #include <stdlib.h>
 #include <string.h>
 
-int main() {
+int main(int argc, char *argv[]) {
+    // Check if the file name was provided
+    if (argc != 2) {
+        printf("Usage: %s <filename>\n", argv[0]);
+        return 1;
+    }
+
     FILE *originalFile, *modifiedFile;
-    char originalFileName[] = "example.txt"; // Replace with your file name
-    char modifiedFileName[50];
+    char *originalFileName = argv[1]; // Get the file name from command line
+    char modifiedFileName[100]; // Buffer for modified file name
 
     // Creating the modified file name
-    strcpy(modifiedFileName, originalFileName);
-    strcat(modifiedFileName, "-modified-by-C");
+    snprintf(modifiedFileName, sizeof(modifiedFileName), "%s-modified-by-C", originalFileName);
 
     // Open the original file for reading
     originalFile = fopen(originalFileName, "r");
@@ -42,4 +47,3 @@ int main() {
     printf("File has been modified and saved as %s\n", modifiedFileName);
     return 0;
 }
-
